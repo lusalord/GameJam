@@ -19,20 +19,27 @@ namespace KBG.Script.Enemy
         {
             _data = _manager.enemyData;
             _skill = _data.Skill;
-            _skill?.OnStart(_manager.target.gameObject, gameObject);
+            _skill?.OnStart(_manager.target.gameObject, _manager);
         }
 
         private void Update()
         {
             if (_skill == null) return;
-            _skill.OnUpdate(_manager.target.gameObject, gameObject);
-            if (_skill.CheckRequirement(_data.SkillRequirement))
-                _skill.OnSkill(_manager.target.gameObject, gameObject);
+            _skill.OnUpdate(_manager.target.gameObject, _manager);
+            if (_skill.CheckRequirement())
+                _skill.OnSkill(_manager.target.gameObject, _manager);
         }
 
         private void OnDisable()
         {
-            _skill?.OnExit(_manager.target.gameObject, gameObject);
+            try
+            {
+                _skill?.OnExit(_manager.target.gameObject, _manager);
+            }
+            catch (MissingReferenceException)
+            {
+                _manager.target = null;
+            }
         }
     }
 }

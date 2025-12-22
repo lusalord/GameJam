@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 453a84c4d5370b6428e51b5130d4d380, type: 3}
-  m_Name: Teleport
+  m_Name: Summoner
   m_EditorClassIdentifier: 
-  MaxHp: 3
-  <MoveSpeed>k__BackingField: 3
+  MaxHp: 0
+  <MoveSpeed>k__BackingField: 0
   Skill:
-    rid: 2210277260779061559
+    rid: 2210277260779061664
   references:
     version: 2
     RefIds:
-    - rid: 2210277260779061559
-      type: {class: Teleport, ns: KBG.Script.Enemy.SKill, asm: Assembly-CSharp}
+    - rid: 2210277260779061664
+      type: {class: Spawn, ns: KBG.Script.Enemy.SKill, asm: Assembly-CSharp}
       data:
-        range: 3
-        waitTime: 1
+        spawnPrefab: {fileID: 0}
+        spawnData: {fileID: 0}
