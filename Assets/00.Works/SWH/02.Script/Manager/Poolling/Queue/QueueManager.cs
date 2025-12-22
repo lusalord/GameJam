@@ -1,0 +1,60 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class QueueManager : MonoBehaviour
+{
+    private QueueListSO poolList => Resources.Load<QueueListSO>("QueueList");//Asset에 Resources폴더 만들어서 거기다가 넣기
+
+    private Dictionary<string, Queue> _pools;
+    private void Awake()
+    {
+        _pools = new Dictionary<string, Queue>();
+
+        foreach (QueueItem item in poolList.items)
+        {
+            CreatePool(item.prefab, item.count);
+        }
+    }
+    public static QueueManager Init()
+    {
+        GameObject obj = new GameObject("QueueManager");
+        obj.transform.parent = GameManager.Instance.transform;
+        obj.AddComponent<QueueManager>();
+        return obj.GetComponent<QueueManager>();
+    }
+
+    private void CreatePool(GameObject item, int count)
+    {
+        IPoolable poolable = item.GetComponent<IPoolable>();
+        if (poolable == null)
+        {
+            Debug.LogError($"Item {item.name} does not implement IPoolable");
+            return;
+        }
+
+        Queue pool = new Queue(poolable, transform, count);
+        _pools.Add(poolable.ItemName, pool); // 이름을 기반으로 딕셔너리에 추가한다.
+    }
+
+    public IPoolable Dequeue(string itemName)
+    {
+        if (_pools.ContainsKey(itemName))
+        {
+            IPoolable item = _pools[itemName].Dequeue();
+            item.ResetItem(); // 리셋해서
+            return item;
+        }
+        Debug.LogError($"Item {itemName} not found in pool.");
+        return null;
+    }
+
+    public void Enqueue(IPoolable returnItem)
+    {
+        if (_pools.ContainsKey(returnItem.ItemName))
+        {
+            _pools[returnItem.ItemName].Enqueue(returnItem); // 풀에 반납한다.
+            return;
+        }
+        Debug.LogError($"Item {returnItem.ItemName} not found in pool.");
+    }
+}
