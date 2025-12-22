@@ -14,7 +14,6 @@ public class SoundAssetDictionary : ScriptableObject
         {
             soundAssets.Add(i.ClipName, i.Clip);
         }
-        Debug.Log(soundAssets[_asset[0].ClipName]);
         return soundAssets;
     }
 }
