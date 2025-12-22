@@ -1,26 +1,31 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace KBG.Script.Enemy.SKill
 {
     [System.Serializable]
-    public class Teleport : IEnemySkill
+    public class Dash : IEnemySkill
     {
-        [SerializeField]private float range;
-        [SerializeField]private float waitTime;
+        [SerializeField] private float activeDistance;
+        [SerializeField] private float stopDistance;
+        [SerializeField] private float dashSpeed;
         private bool _isActive;
-        private float _activeTime;
         public bool CheckRequirement(GameObject target, EnemyManager self)
         {
-            return false;
+            if (_isActive) return false;
+            return Vector2.Distance(target.transform.position, self.transform.position) <= activeDistance;
         }
 
         public void OnSkill(GameObject target, EnemyManager self)
         {
-            self.transform.position = target.transform.position + -(self.transform.position - target.transform.position);
+            self.Movement.currentSpeed += dashSpeed;
             _isActive = true;
-            self.Movement.currentSpeed = 0;
-            _activeTime = Time.time;
+        }
+
+        public void Cancel(EnemyManager self)
+        {
+            self.Movement.OnEnable();
         }
 
         public void OnStart(GameObject target, EnemyManager self)
@@ -30,10 +35,8 @@ namespace KBG.Script.Enemy.SKill
 
         public void OnUpdate(GameObject target, EnemyManager self)
         {
-            if (Vector2.Distance(self.transform.position, target.transform.position) < range && !_isActive)
-                OnSkill(target, self);
-            if (Time.time > waitTime + _activeTime && _isActive)
-                self.Movement.OnEnable();
+            if (Vector2.Distance(target.transform.position, self.transform.position) <= stopDistance)
+                Cancel(self);
         }
 
         public void OnExit(GameObject target, EnemyManager self)

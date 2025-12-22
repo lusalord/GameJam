@@ -4,7 +4,7 @@ namespace KBG.Script.Enemy.SKill
 {
     public interface IEnemySkill
     {
-        public bool CheckRequirement();
+        public bool CheckRequirement(GameObject target, EnemyManager self);
         public void OnSkill(GameObject target, EnemyManager self);
 
         public void OnStart(GameObject target, EnemyManager self);

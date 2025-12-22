@@ -26,7 +26,7 @@ namespace KBG.Script.Enemy
         {
             if (_skill == null) return;
             _skill.OnUpdate(_manager.target.gameObject, _manager);
-            if (_skill.CheckRequirement())
+            if (_skill.CheckRequirement(_manager.target.gameObject, _manager))
                 _skill.OnSkill(_manager.target.gameObject, _manager);
         }
 

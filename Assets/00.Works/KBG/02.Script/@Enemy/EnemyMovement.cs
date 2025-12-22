@@ -14,7 +14,7 @@ namespace KBG.Script.Enemy
             _manager = GetComponent<EnemyManager>();
         }
 
-        private void OnEnable()
+        public void OnEnable()
         {
             currentSpeed = _manager.enemyData.MoveSpeed;
         }

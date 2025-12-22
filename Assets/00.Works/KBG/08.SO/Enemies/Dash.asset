@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 453a84c4d5370b6428e51b5130d4d380, type: 3}
-  m_Name: Summoner
+  m_Name: Dash
   m_EditorClassIdentifier: 
-  MaxHp: 0
-  <MoveSpeed>k__BackingField: 0
+  MaxHp: 4
+  <MoveSpeed>k__BackingField: 1
   Skill:
-    rid: 2210277260779061664
+    rid: 2210277260779061704
   references:
     version: 2
     RefIds:
-    - rid: 2210277260779061664
-      type: {class: Spawn, ns: KBG.Script.Enemy.SKill, asm: Assembly-CSharp}
+    - rid: 2210277260779061704
+      type: {class: Dash, ns: KBG.Script.Enemy.SKill, asm: Assembly-CSharp}
       data:
-        spawnPrefab: {fileID: 0}
-        spawnData: {fileID: 0}
+        activeDistance: 10
+        stopDistance: 5
+        dashSpeed: 100
