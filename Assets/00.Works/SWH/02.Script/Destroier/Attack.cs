@@ -24,19 +24,20 @@ public class Attack : MonoBehaviour
             foreach (EnemyHealthSystem i in Enemys)
             {
                 if (i == null) break;
+                bool aaa = false;
                 if (Vector2.Distance(transform.position, i.transform.position) < 0.25f)
                 {
                     print("정확");
-                    i.Hp -= 3;
+                    aaa = i.TakeDamage(3);
                 }
                 else
                 {
                     print("적중");
-                    i.Hp--;
+                    aaa = i.TakeDamage(1);
                 }
                 OnAttack?.Invoke();
 
-                if (i.Hp <= 0)
+                if (aaa)
                 {
                     eh = i;
                     break;
