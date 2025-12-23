@@ -26,13 +26,13 @@ public class Attack : MonoBehaviour
                 if (i == null) break;
                 if (Vector2.Distance(transform.position, i.transform.position) < 0.25f)
                 {
-                    print("Á¤È®");
-                    i.Hp -= 3;
+                    print("ï¿½ï¿½È®");
+                    // i.Hp -= 3;
                 }
                 else
                 {
-                    print("ÀûÁß");
-                    i.Hp--;
+                    print("ï¿½ï¿½ï¿½ï¿½");
+                    // i.Hp--;
                 }
                 OnAttack?.Invoke();
 

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6436676429169107565}
   - component: {fileID: 1552462585964235222}
   - component: {fileID: 6843175522885554384}
+  - component: {fileID: 1152266385208017477}
   m_Layer: 0
   m_Name: EnemyTest
   m_TagString: Untagged
@@ -195,6 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f80ee95d77c14c94fa161e9ae7a7b662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSpeed: 0
 --- !u!114 &6843175522885554384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,4 +209,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932a73458a4e43140911d00b741469f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 0
+--- !u!114 &1152266385208017477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8552356345769591877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae74a4b2ba2e20547ba4b0ed6b966736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

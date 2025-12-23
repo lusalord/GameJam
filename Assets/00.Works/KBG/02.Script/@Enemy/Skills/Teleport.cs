@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,18 +10,23 @@ namespace KBG.Script.Enemy.SKill
         [SerializeField]private float range;
         [SerializeField]private float waitTime;
         private bool _isActive;
-        private float _activeTime;
         public bool CheckRequirement(GameObject target, EnemyManager self)
         {
-            return false;
+            return (Vector2.Distance(self.transform.position, target.transform.position) < range && !_isActive);
         }
 
         public void OnSkill(GameObject target, EnemyManager self)
         {
             self.transform.position = target.transform.position + -(self.transform.position - target.transform.position);
             _isActive = true;
+            self.StartCoroutine(SpeedDown(self));
+        }
+
+        private IEnumerator SpeedDown(EnemyManager self)
+        {
             self.Movement.currentSpeed = 0;
-            _activeTime = Time.time;
+            yield return new WaitForSeconds(waitTime);
+            self.Movement.OnEnable();
         }
 
         public void OnStart(GameObject target, EnemyManager self)
@@ -30,10 +36,6 @@ namespace KBG.Script.Enemy.SKill
 
         public void OnUpdate(GameObject target, EnemyManager self)
         {
-            if (Vector2.Distance(self.transform.position, target.transform.position) < range && !_isActive)
-                OnSkill(target, self);
-            if (Time.time > waitTime + _activeTime && _isActive)
-                self.Movement.OnEnable();
         }
 
         public void OnExit(GameObject target, EnemyManager self)

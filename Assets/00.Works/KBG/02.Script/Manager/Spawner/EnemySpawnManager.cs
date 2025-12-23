@@ -14,6 +14,7 @@ namespace KBG.Script.Manager
         [SerializeField] private List<WaveData> waveData;
         [SerializeField] private GameObject enemyPrefab;
         [SerializeField] private SpawnData data;
+        [SerializeField] private bool loop;
         
         private int _currentWaveIndex = 0;
         private int _currentEnemyIndex = 0;
@@ -67,7 +68,7 @@ namespace KBG.Script.Manager
 
         private IEnumerator EnemySpawn()
         {
-            yield return new WaitForSeconds(data.enemySpawnDelay);
+            yield return new WaitForSeconds(Random.Range(data.enemySpawnDelayMin,data.enemySpawnDelayMax));
             var enemy = Instantiate(enemyPrefab, RandomSpawnPosition(), Quaternion.identity).GetComponent<EnemyManager>();
             enemy.transform.SetParent(_enemyParent.transform);
             enemy.target = target;
@@ -85,9 +86,17 @@ namespace KBG.Script.Manager
 
         private IEnumerator NextWave()
         {
-            if (waveData.Count -1 <= _currentWaveIndex)
+            if (waveData.Count -1 <= _currentWaveIndex && !loop)
             {
                 Debug.Log("WaveEnd");
+                yield break;
+            }
+            else if (waveData.Count - 1 <= _currentWaveIndex && loop)
+            {
+                _currentEnemyIndex = 0;
+                _currentWaveIndex = 0;
+                Debug.Log("Next Wave : "+ _currentWaveIndex);
+                StartCoroutine(EnemySpawn());
                 yield break;
             }
             
