@@ -1,39 +1,40 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private AttackAimmer _attackController;
+    [SerializeField] private Attack _attackController;
     [SerializeField] private Transform _dirObj;
-    private Vector2 _dir = Vector2.right;
+    [SerializeField] private float _spinPower;
+    [SerializeField] private float _movePower;
     private void Start()
     {
-        _attackController.OnAttack += Move;
-        InputManager.OnLRClick += ChangeDir;
+        _attackController.OnAttack += () => StartCoroutine(Move());
     }
-
-    private void ChangeDir(bool value)
+    private void Update()
     {
-        if (value)
+        if (Input.GetMouseButton(0))
         {
-            _dirObj.Rotate(0, 0, -90);
-            if (_dir == Vector2.up) _dir = Vector2.right;
-            else if (_dir == Vector2.right) _dir = Vector2.down;
-            else if (_dir == Vector2.down) _dir = Vector2.left;
-            else if (_dir == Vector2.left) _dir = Vector2.up;
+            _dirObj.Rotate(0, 0, Time.deltaTime * _spinPower);
         }
-        else
+        else if (Input.GetMouseButton(1))
         {
-            _dirObj.Rotate(0, 0, 90);
-            if (_dir == Vector2.up) _dir = Vector2.left;
-            else if (_dir == Vector2.left) _dir = Vector2.down;
-            else if (_dir == Vector2.down) _dir = Vector2.right;
-            else if (_dir == Vector2.right) _dir = Vector2.up;
+            _dirObj.Rotate(0, 0, -Time.deltaTime * _spinPower);
         }
     }
-
-    private void Move()
+    private IEnumerator Move()
     {
-        transform.Translate(-_dir);
+        float x = _movePower * _dirObj.right.x;
+        float y = _movePower * _dirObj.right.y;
+        float t = 0;
+        while (t < 1)
+        {
+            float x2 = x - Mathf.Lerp(0, x, t);
+            float y2 = y - Mathf.Lerp(0, y, t);
+            transform.position += new Vector3(x2, y2, 0) * Time.deltaTime;
+            t += Time.deltaTime;
+            t = Mathf.Clamp(t, 0, 1);
+            yield return null;
+        }
     }
 }
