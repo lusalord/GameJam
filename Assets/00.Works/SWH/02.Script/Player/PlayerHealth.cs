@@ -25,6 +25,7 @@ public class PlayerHealth : MonoBehaviour
         if (collision.TryGetComponent(out EnemyHealthSystem eh))
         {
             Damage(1);
+            GetComponent<Rigidbody2D>().AddForce(collision.transform.position - transform.position, ForceMode2D.Impulse);
             Destroy(collision.gameObject);
         }
     }
