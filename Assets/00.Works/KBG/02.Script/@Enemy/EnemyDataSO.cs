@@ -9,6 +9,7 @@ namespace KBG.Script.Enemy
     {
         [field: SerializeField] public int MaxHp;
         [field: SerializeField] public float MoveSpeed { get; private set; }
+        [field: SerializeField] public int Point { get; private set; }
 
         [SerializeReference, SubclassSelector(UseToStringAsLabel = true)] public IEnemySkill Skill;
     }

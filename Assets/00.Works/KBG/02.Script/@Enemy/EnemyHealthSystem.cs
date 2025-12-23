@@ -4,8 +4,9 @@ namespace UnityEngine
 {
     public class EnemyHealthSystem : MonoBehaviour
     {
-        public int Hp;
+        public int Hp {get; private set;}
         private EnemyManager _manager;
+        public EnemyDataSO Data { get; private set; }
 
         private void Awake()
         {
@@ -14,7 +15,8 @@ namespace UnityEngine
 
         private void OnEnable()
         {
-            Hp = _manager.enemyData.MaxHp;
+            Data = _manager.enemyData;
+            Hp = Data.MaxHp;
         }
 
         /// <summary>
