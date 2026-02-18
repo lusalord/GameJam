@@ -29,11 +29,13 @@ public class Attack : MonoBehaviour
                 {
                     print("정확");
                     aaa = i.TakeDamage(3);
+                    SoundManager.Play("Parring_Sucesses", GameManager.Instance._sfx);
                 }
                 else
                 {
                     print("적중");
-                    aaa = i.TakeDamage(1);
+                    aaa = i.TakeDamage(2);
+                    SoundManager.Play("sfx", GameManager.Instance._sfx);
                 }
                 OnAttack?.Invoke();
 
@@ -52,7 +54,7 @@ public class Attack : MonoBehaviour
             {
                 Enemys.Remove(eh);
                 Destroy(eh.gameObject);
-                _point.Point++;
+                _point.Point+=2;
             }
         }
     }

@@ -17,6 +17,8 @@ public class Satelite : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out EnemyHealthSystem eh))
         {
+            SoundManager.Play("sfx", GameManager.Instance._sfx);
+            GetComponentInParent<PlayerHealth>().HP++;
             Destroy(eh.gameObject);
             Destroy(gameObject);
         }

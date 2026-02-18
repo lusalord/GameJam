@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int HP { get; private set; }
+    public int HP { get; set; }
     public event Action<int> OnDamage;
     public event Action OnDead;
     private void Awake()
@@ -25,7 +25,6 @@ public class PlayerHealth : MonoBehaviour
         if (collision.TryGetComponent(out EnemyHealthSystem eh))
         {
             Damage(1);
-            GetComponent<Rigidbody2D>().AddForce(collision.transform.position - transform.position, ForceMode2D.Impulse);
             Destroy(collision.gameObject);
         }
     }

@@ -18,7 +18,6 @@ namespace UnityEngine
             Data = _manager.enemyData;
             Hp = Data.MaxHp;
         }
-
         /// <summary>
         /// 
         /// </summary>

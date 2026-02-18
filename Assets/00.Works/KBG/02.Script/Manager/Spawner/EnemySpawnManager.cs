@@ -15,6 +15,9 @@ namespace KBG.Script.Manager
         [SerializeField] private GameObject enemyPrefab;
         [SerializeField] private SpawnData data;
         [SerializeField] private bool loop;
+
+        [SerializeField] GameObject _heal;
+        [SerializeField] Transform _pl;
         
         private int _currentWaveIndex = 0;
         private int _currentEnemyIndex = 0;
@@ -59,7 +62,6 @@ namespace KBG.Script.Manager
                     spawnPoint.y = Random.Range(camMinXY.y, spawnAreaMaxXY.y);
                     break;
                 default:
-                    Debug.LogError("Spawn Method Not Found");
                     spawnPoint = Vector2.zero;
                     break;
             }
@@ -74,7 +76,6 @@ namespace KBG.Script.Manager
             enemy.target = target;
             enemy.enemyData = waveData[_currentWaveIndex].enemies[_currentEnemyIndex];
             enemy.gameObject.SetActive(true);
-            Debug.Log("EnemySpawn : " + _currentEnemyIndex);
             if (waveData[_currentWaveIndex].enemies.Count- 1 <= _currentEnemyIndex)
             {
                 StartCoroutine(NextWave());
@@ -88,14 +89,17 @@ namespace KBG.Script.Manager
         {
             if (waveData.Count -1 <= _currentWaveIndex && !loop)
             {
-                Debug.Log("WaveEnd");
                 yield break;
             }
             else if (waveData.Count - 1 <= _currentWaveIndex && loop)
             {
                 _currentEnemyIndex = 0;
                 _currentWaveIndex = 0;
-                Debug.Log("Next Wave : "+ _currentWaveIndex);
+                yield return new WaitForSeconds(12);
+                float x = Random.Range(_pl.position.x - 8f, _pl.position.x + 8f);
+                float y = Random.Range(_pl.position.y - 4f, _pl.position.y + 4f);
+                Vector3 xyz = new Vector3(x, y, 0);
+                GameObject obg = Instantiate(_heal, xyz, Quaternion.identity);
                 StartCoroutine(EnemySpawn());
                 yield break;
             }
@@ -104,7 +108,6 @@ namespace KBG.Script.Manager
             
             _currentEnemyIndex = 0;
             _currentWaveIndex++;
-            Debug.Log("Next Wave : "+ _currentWaveIndex);
             StartCoroutine(EnemySpawn());
         }
 

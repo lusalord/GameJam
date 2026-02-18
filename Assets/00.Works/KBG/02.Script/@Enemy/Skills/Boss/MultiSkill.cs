@@ -9,7 +9,7 @@ namespace KBG.Script.Enemy.SKill
     [Serializable]
     public class MultiSkill : IEnemySkill
     {
-        [SerializeField] private List<IEnemySkill> enemySkills;
+        [SerializeField] [SerializeReference, SubclassSelector(UseToStringAsLabel =true)] private List<IEnemySkill> enemySkills;
         [SerializeField] private float skillCooldownMin;
         [SerializeField] private float skillCooldownMax;
 

@@ -7,7 +7,6 @@ public class Movement : MonoBehaviour
     [SerializeField] private Transform _dirObj;
     [SerializeField] private float _spinPower;
     [SerializeField] private float _movePower;
-    [SerializeField] private GameObject attackPointer;
     
     private void Start()
     {
@@ -24,7 +23,6 @@ public class Movement : MonoBehaviour
             _dirObj.Rotate(0, 0, -Time.deltaTime * _spinPower);
         }
 
-        MaintainDistance();
     }
     private IEnumerator Move()
     {
@@ -40,11 +38,5 @@ public class Movement : MonoBehaviour
             t = Mathf.Clamp(t, 0, 1);
             yield return null;
         }
-    }
-    private void MaintainDistance()
-    {
-        GameObject obj = attackPointer.transform.GetChild(0).gameObject;
-        Vector2 dir = (obj.transform.position - transform.position).normalized;
-        obj.transform.position = (Vector2)transform.position + dir * 1.5f;
     }
 }

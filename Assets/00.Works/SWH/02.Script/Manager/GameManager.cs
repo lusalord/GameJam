@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,13 +10,14 @@ public class GameManager : MonoBehaviour
     //public InputManager InputManager { get; private set; }
     public QueueManager QueueManager { get; private set; }
     public CorutineManager CorutineManager { get; private set; }
+    public AudioMixerGroup _bgm;
+    public AudioMixerGroup _sfx;
     private void Awake()
     {
         #region Singleton
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
         }
         else
         {
@@ -33,5 +35,9 @@ public class GameManager : MonoBehaviour
         InputManager.Init();
         QueueManager = QueueManager.Init();
         CorutineManager = CorutineManager.Init();
+    }
+    private void Start()
+    {
+        SoundManager.Play("bgm", _bgm);
     }
 }

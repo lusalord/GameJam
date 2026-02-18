@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackAimmer : MonoBehaviour
@@ -17,5 +14,9 @@ public class AttackAimmer : MonoBehaviour
         Vector2 dir = pos - playerPos;
         float desireAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, desireAngle);
+    }
+    private void OnDestroy()
+    {
+        InputManager.OnMousePosDelta -= Aimming;
     }
 }
